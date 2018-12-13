@@ -19,3 +19,7 @@
    - `http://127.0.0.1:14000/?token=91160888-4af1-4d4f-a5aa-1abc3ce8808d&echo=1239`
    - `http://127.0.0.1:14000//util/validate.jpg?token=91160888-4af1-4d4f-a5aa-1abc3ce8808d`
    - `http://127.0.0.1:14000/test/checkImageCode?token=91160888-4af1-4d4f-a5aa-1abc3ce8808d&ImageCode=rbh8n`
+- 前台项目依赖
+  - 在临时下载目录里面打开`Git Bash Here`
+  - 执行`git clone git@github.com:huhuiyu/angularjs-base.git SupermarketOnlineStatic`
+  - 
