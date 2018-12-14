@@ -2,6 +2,7 @@
   padding: 10px 0px;
   overflow-x: hidden;
 }
+
 .test-index .include {
   position: absolute;
   width: 100%;
@@ -19,14 +20,17 @@
   from {
     left: 0;
   }
+
   to {
     left: -100%;
   }
 }
+
 @keyframes test-index-change-enter {
   from {
     left: 100%;
   }
+
   to {
     left: 0;
   }
