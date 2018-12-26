@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import top.yangshangyi.supermarketonline.dao.TbAdminUserDAO;
 import top.yangshangyi.supermarketonline.dao.TbTokenDAO;
+import top.yangshangyi.supermarketonline.entity.TbAdminUser;
 import top.yangshangyi.supermarketonline.entity.TbToken;
+import top.yangshangyi.supermarketonline.entity.TbTokenInfo;
 import top.yangshangyi.supermarketonline.service.AopService;
 import top.yangshangyi.supermarketonline.utils.MyUtils;
 
@@ -21,6 +24,9 @@ import top.yangshangyi.supermarketonline.utils.MyUtils;
 public class AopServiceImpl implements AopService {
   @Autowired
   private TbTokenDAO tbTokenDAO;
+  
+  @Autowired
+  private TbAdminUserDAO tbAdminUserDAO;
 
   /**
    * makeNewToken-创建一个新的token
@@ -52,6 +58,17 @@ public class AopServiceImpl implements AopService {
     // 存在就更新
     tbTokenDAO.updateToken(stoken);
     return stoken;
+  }
+  @Override
+  public TbAdminUser checkAdminUser(TbToken token)throws Exception{
+    if (token==null) {
+      return null;
+    }
+    //查询登录用户信息
+    TbTokenInfo tokenInfo=new TbTokenInfo();
+    tokenInfo.setToken(token.getToken());
+    TbAdminUser user = tbAdminUserDAO.queryTokenUser(tokenInfo);
+    return user;
   }
 
 }

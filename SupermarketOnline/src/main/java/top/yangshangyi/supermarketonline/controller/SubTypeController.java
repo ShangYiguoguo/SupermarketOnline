@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import top.yangshangyi.supermarketonline.base.BaseAdminUserController;
 import top.yangshangyi.supermarketonline.model.TbSubTypeModel;
 import top.yangshangyi.supermarketonline.service.SubTypeService;
 import top.yangshangyi.supermarketonline.utils.JsonMessage;
@@ -16,7 +17,7 @@ import top.yangshangyi.supermarketonline.utils.JsonMessage;
  */
 @RestController
 @RequestMapping("/subtype")
-public class SubTypeController {
+public class SubTypeController extends BaseAdminUserController{
 
   @Autowired
   private SubTypeService subTypeService;

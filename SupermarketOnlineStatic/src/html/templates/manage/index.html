@@ -1,4 +1,31 @@
-<div class="text-center">
-  <a href="/#!/route/page/manage/typemanage">类型管理</a>
-  <a href="/#!/route/page/manage/subtypemanage">小类管理</a>
-</div>
+<div class="manage-index" ng-controller="ManageIndexCtrl">
+  <div class="main">
+
+    <div class="panel">
+      <div class="panel-heading">
+        <div class="panel-title text-center" style="font-size: 2.5rem;">管理员登录</div>
+      </div>
+      <div class="panel-body">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">
+              <i class="iconfont">&#xe638;</i>
+            </span>
+            <input type="text" ng-model="formdata.username" class="form-control" autocomplete="off" placeholder="请输入用户">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon">
+              <i class="iconfont">&#xe6e6;</i>
+            </span>
+            <input type="password" ng-model="formdata.password" class="form-control" autocomplete="off" placeholder="请输入密码">
+          </div>
+
+        </div>
+        <div class="text-center btndiv">
+          <span class="btn btn-default spanbtn" ng-click="login();"> <i class="iconfont">&#xe633;</i>安全登录</span>
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>

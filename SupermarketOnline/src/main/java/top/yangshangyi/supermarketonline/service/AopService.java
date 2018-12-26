@@ -1,5 +1,6 @@
 package top.yangshangyi.supermarketonline.service;
 
+import top.yangshangyi.supermarketonline.entity.TbAdminUser;
 import top.yangshangyi.supermarketonline.entity.TbToken;
 
 /**
@@ -18,5 +19,14 @@ public interface AopService {
    * @throws Exception
    */
   TbToken createOrUpdateToken(TbToken token) throws Exception;
+
+  /**
+   * -查询登录用户信息
+   * 
+   * @param token
+   * @return
+   * @throws Exception
+   */
+  TbAdminUser checkAdminUser(TbToken token) throws Exception;
 
 }

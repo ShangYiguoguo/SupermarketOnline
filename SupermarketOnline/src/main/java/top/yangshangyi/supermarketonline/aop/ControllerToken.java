@@ -3,11 +3,14 @@ package top.yangshangyi.supermarketonline.aop;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import top.yangshangyi.supermarketonline.base.BaseAop;
 import top.yangshangyi.supermarketonline.base.BaseModel;
+import top.yangshangyi.supermarketonline.entity.TbAdminUser;
 import top.yangshangyi.supermarketonline.entity.TbToken;
 import top.yangshangyi.supermarketonline.service.AopService;
 import top.yangshangyi.supermarketonline.utils.JsonMessage;
@@ -21,6 +24,11 @@ import top.yangshangyi.supermarketonline.utils.JsonMessage;
 @Aspect
 @Component
 public class ControllerToken extends BaseAop {
+  
+  private static final int LOG_FAIL = 1000;
+
+  private static final Logger log = LoggerFactory.getLogger(ControllerToken.class);
+
   @Autowired
   private AopService aopService;
 
@@ -55,10 +63,35 @@ public class ControllerToken extends BaseAop {
       json.setToken(token.getToken());
     }
   }
+  private JsonMessage checkNeedUser(ProceedingJoinPoint pjp,TbToken token)throws Exception{
+    //处理需要登录的情况
+    Object target=pjp.getTarget();
+    log.debug(String.format("登录检测:%s", target));
+    if (!(target instanceof NeedAdminUser)) {
+      return null;
+    }
+    if (token==null) {
+      return null;
+    }
+    //只有实现NeedAdminUser接口的控制器且token不为空才需要登录检测
+
+      NeedAdminUser nau=(NeedAdminUser)target;
+      TbAdminUser user =aopService.checkAdminUser(token);
+      if (user==null) {
+        return JsonMessage.getFail(LOG_FAIL,"需要登录");
+      }
+      nau.setUser(user);
+      return null;
+  }
 
   @Around("controllerPointcut()")
   public Object token(ProceedingJoinPoint pjp) throws Throwable {
     TbToken token = processInputToken(pjp);
+    JsonMessage check=checkNeedUser(pjp,token);
+    //如果有返回值，表示檢測失敗
+    if (check!=null) {
+      return check;
+    }
     Object result = null;
     // 处理业务逻辑
     result = pjp.proceed();

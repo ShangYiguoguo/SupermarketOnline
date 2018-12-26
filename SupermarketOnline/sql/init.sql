@@ -12,10 +12,14 @@ truncate table TbSubType;
 /*token过期时间配置*/
 insert into TbConfig(configKey,configValue) values('token.timeout','30');
 
+/*默认后台管理用户*/
+insert into TbAdminUser(username,password,nickname)values('test','test-pwd','测试用户');
+
 /*查询*/
 select configKey,configValue,lastupdate from TbConfig;
 select token,lastupdate from TbToken;
 select token,infokey,info,lastupdate from TbTokenInfo;
+
 
 select auid,username,password,nickname,isEnable,lastupdate from TbAdminUser;
 select tid,typeName,typeInfo,isEnable,lastupdate from TbType;
