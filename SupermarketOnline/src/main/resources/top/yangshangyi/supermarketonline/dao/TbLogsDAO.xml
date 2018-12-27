@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 工具类mapper -->
+<mapper namespace="top.yangshangyi.supermarketonline.dao.TbLogsDAO">
+  <!-- 查询数据库当前时间 -->
+  <select id="queryAll" resultType="TbLogs">
+   select lid,operator,log,logtype,lastupdate from TbLogs order by  lastupdate desc
+  </select>
+  <select id="queryAll_CONUT" resultType="int">
+   select count(*)from TbLogs
+  </select>
+  <insert id="add" parameterType="TbLogs">
+    insert into TbLogs(operator,log,logtype)
+    values(#{operator},#{log},#{logtype})
+  </insert>
+</mapper>
