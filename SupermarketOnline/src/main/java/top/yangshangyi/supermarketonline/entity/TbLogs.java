@@ -11,6 +11,7 @@ public class TbLogs extends BaseEntity {
   private String log;
   private String logtype;
   private Date lastupdate;
+  private TbAdminUser adminUser;
 
   public TbLogs() {
 
@@ -55,19 +56,15 @@ public class TbLogs extends BaseEntity {
   public void setLastupdate(Date lastupdate) {
     this.lastupdate = lastupdate;
   }
+  
 
-  @Override
-  public String toString() {
-    return "TbLogs [lid=" + lid + ", operator=" + operator + ", log=" + log + ", logtype=" + logtype + ", lastupdate=" + lastupdate + "]";
+  public TbAdminUser getAdminUser() {
+    return adminUser;
   }
 
-  public TbLogs(Integer lid, String operator, String log, String logtype, Date lastupdate) {
-    super();
-    this.lid = lid;
-    this.operator = operator;
-    this.log = log;
-    this.logtype = logtype;
-    this.lastupdate = lastupdate;
+  public void setAdminUser(TbAdminUser adminUser) {
+    this.adminUser = adminUser;
   }
+
 
 }

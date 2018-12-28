@@ -53,18 +53,6 @@ public class TbSubType extends BaseEntity{
   public void setLastupdate(Date lastupdate) {
     this.lastupdate = lastupdate;
   }
-  @Override
-  public String toString() {
-    return "TbSubType [stid=" + stid + ", tid=" + tid + ", subName=" + subName + ", subInfo=" + subInfo + ", isEnable=" + isEnable + ", lastupdate=" + lastupdate + "]";
-  }
-  public TbSubType(Integer stid, Integer tid, String subName, String subInfo, String isEnable, Date lastupdate) {
-    super();
-    this.stid = stid;
-    this.tid = tid;
-    this.subName = subName;
-    this.subInfo = subInfo;
-    this.isEnable = isEnable;
-    this.lastupdate = lastupdate;
-  }
+
   
 }

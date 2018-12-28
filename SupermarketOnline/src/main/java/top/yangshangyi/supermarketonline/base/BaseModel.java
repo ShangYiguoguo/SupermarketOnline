@@ -1,5 +1,6 @@
 package top.yangshangyi.supermarketonline.base;
 
+import top.yangshangyi.supermarketonline.entity.TbAdminUser;
 import top.yangshangyi.supermarketonline.entity.TbToken;
 import top.yangshangyi.supermarketonline.entity.TbTokenInfo;
 
@@ -50,5 +51,16 @@ public abstract class BaseModel extends BaseEntity {
     info.setToken(token);
     return info;
   }
+  
+  private TbAdminUser tbAdminUser;
+
+  public TbAdminUser getTbAdminUser() {
+    return tbAdminUser;
+  }
+
+  public void setTbAdminUser(TbAdminUser tbAdminUser) {
+    this.tbAdminUser = tbAdminUser;
+  }
+  
 
 }

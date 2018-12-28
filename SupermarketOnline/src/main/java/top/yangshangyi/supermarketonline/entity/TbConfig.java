@@ -38,16 +38,6 @@ public class TbConfig extends BaseEntity {
     this.lastupdate = lastupdate;
   }
 
-  @Override
-  public String toString() {
-    return "TbConfig [configKey=" + configKey + ", configValue=" + configValue + ", lastupdate=" + lastupdate + "]";
-  }
 
-  public TbConfig(String configKey, String configValue, Date lastupdate) {
-    super();
-    this.configKey = configKey;
-    this.configValue = configValue;
-    this.lastupdate = lastupdate;
-  }
 
 }

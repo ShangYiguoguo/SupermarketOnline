@@ -24,7 +24,7 @@ import top.yangshangyi.supermarketonline.utils.JsonMessage;
 @Aspect
 @Component
 public class ControllerToken extends BaseAop {
-  
+
   private static final int LOG_FAIL = 1000;
 
   private static final Logger log = LoggerFactory.getLogger(ControllerToken.class);
@@ -32,24 +32,28 @@ public class ControllerToken extends BaseAop {
   @Autowired
   private AopService aopService;
 
-  private TbToken processInputToken(ProceedingJoinPoint pjp) throws Exception {
-    TbToken token = null;
+  private BaseModel getBaseModel(ProceedingJoinPoint pjp) throws Exception {
     BaseModel model = null;
-    // 校验是否存在BaseModel参数
-    boolean haveBaseModel = false;
     Object[] args = pjp.getArgs();
     for (Object arg : args) {
       if (arg instanceof BaseModel) {
         // 获取客户端token
-        haveBaseModel = true;
         model = (BaseModel) arg;
-        token = model.makeTbToken();
         break;
       }
     }
-    // 处理token信息更新
+    return model;
+  }
+
+  private TbToken processInputToken(ProceedingJoinPoint pjp) throws Exception {
+    TbToken token = null;
+    BaseModel model = getBaseModel(pjp);
+    if (model!=null) {
+      token=model.makeTbToken();
+    }
+    // 校验是否存在BaseModel参数
     token = aopService.createOrUpdateToken(token);
-    if (haveBaseModel) {
+    if (model!=null) {
       // 更新model中的token信息
       model.setToken(token.getToken());
     }
@@ -63,33 +67,39 @@ public class ControllerToken extends BaseAop {
       json.setToken(token.getToken());
     }
   }
-  private JsonMessage checkNeedUser(ProceedingJoinPoint pjp,TbToken token)throws Exception{
-    //处理需要登录的情况
-    Object target=pjp.getTarget();
+
+  private JsonMessage checkNeedUser(ProceedingJoinPoint pjp, TbToken token) throws Exception {
+    // 处理需要登录的情况
+    Object target = pjp.getTarget();
     log.debug(String.format("登录检测:%s", target));
     if (!(target instanceof NeedAdminUser)) {
       return null;
     }
-    if (token==null) {
+    if (token == null) {
       return null;
     }
-    //只有实现NeedAdminUser接口的控制器且token不为空才需要登录检测
+    // 只有实现NeedAdminUser接口的控制器且token不为空才需要登录检测
 
-      NeedAdminUser nau=(NeedAdminUser)target;
-      TbAdminUser user =aopService.checkAdminUser(token);
-      if (user==null) {
-        return JsonMessage.getFail(LOG_FAIL,"需要登录");
-      }
-      nau.setUser(user);
-      return null;
+    NeedAdminUser nau = (NeedAdminUser) target;
+    TbAdminUser user = aopService.checkAdminUser(token);
+    if (user == null) {
+      return JsonMessage.getFail(LOG_FAIL, "需要登录");
+    }
+    nau.setUser(user);
+    //给model注入登录信息
+    BaseModel model=getBaseModel(pjp);
+    if (model!=null) {
+      model.setTbAdminUser(user);
+    }
+    return null;
   }
 
   @Around("controllerPointcut()")
   public Object token(ProceedingJoinPoint pjp) throws Throwable {
     TbToken token = processInputToken(pjp);
-    JsonMessage check=checkNeedUser(pjp,token);
-    //如果有返回值，表示檢測失敗
-    if (check!=null) {
+    JsonMessage check = checkNeedUser(pjp, token);
+    // 如果有返回值，表示檢測失敗
+    if (check != null) {
       return check;
     }
     Object result = null;

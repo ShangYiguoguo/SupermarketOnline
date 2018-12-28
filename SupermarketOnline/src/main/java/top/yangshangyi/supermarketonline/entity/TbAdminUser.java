@@ -51,18 +51,6 @@ public class TbAdminUser extends BaseEntity{
   public void setLastupdate(Date lastupdate) {
     this.lastupdate = lastupdate;
   }
-  @Override
-  public String toString() {
-    return "TbAdminUser [auid=" + auid + ", username=" + username + ", password=" + password + ", nickname=" + nickname + ", isEnable=" + isEnable + ", lastupdate=" + lastupdate + "]";
-  }
-  public TbAdminUser(Integer auid, String username, String password, String nickname, String isEnable, Date lastupdate) {
-    super();
-    this.auid = auid;
-    this.username = username;
-    this.password = password;
-    this.nickname = nickname;
-    this.isEnable = isEnable;
-    this.lastupdate = lastupdate;
-  }
+
   
 }

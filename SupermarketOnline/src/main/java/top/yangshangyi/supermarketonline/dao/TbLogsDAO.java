@@ -20,7 +20,7 @@ public interface TbLogsDAO {
    * @return
    * @throws Exception
    */
-  public List<TbLogs> queryAll() throws Exception;
+  public List<TbLogs> queryAll(TbLogs logs) throws Exception;
 
   /**
    * 添加log
@@ -30,4 +30,6 @@ public interface TbLogsDAO {
    * @throws Exception
    */
   public int add(TbLogs tbLogs) throws Exception;
+  
+  
 }

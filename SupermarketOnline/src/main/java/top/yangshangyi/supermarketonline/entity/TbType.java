@@ -44,17 +44,6 @@ public class TbType extends BaseEntity{
   public void setLastupdate(Date lastupdate) {
     this.lastupdate = lastupdate;
   }
-  @Override
-  public String toString() {
-    return "TbType [tid=" + tid + ", typeName=" + typeName + ", typeInfo=" + typeInfo + ", isEnable=" + isEnable + ", lastupdate=" + lastupdate + "]";
-  }
-  public TbType(Integer tid, String typeName, String typeInfo, String isEnable, Date lastupdate) {
-    super();
-    this.tid = tid;
-    this.typeName = typeName;
-    this.typeInfo = typeInfo;
-    this.isEnable = isEnable;
-    this.lastupdate = lastupdate;
-  }
+
   
 }
